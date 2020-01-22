@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import './App.css';
 
-function App() {
+function GalleryImg(props) {
+  return (
+    <img src={props.src} alt={props.alt} />
+  );
+}
+
+function Gallery() {
   const [images, setImage] = useState([
     {
       url: "https://images.unsplash.com/photo-1579614456650-dfcdfee5db11?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
@@ -18,12 +24,17 @@ function App() {
   ]);
 
   return (
+    images.map((image, index) => (
+      <GalleryImg key={index} src={image.url} alt={image.alt} />
+    ))
+  );
+}
+
+function App() {
+
+  return (
     <div className="App">
-      <div className="Gallery">
-        {images.map((image, index) => (
-          <img key={index} src={image.url} alt={image.alt} />
-        ))}
-      </div>
+      <Gallery />
     </div>
   );
 }
