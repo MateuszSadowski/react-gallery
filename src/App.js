@@ -3,7 +3,7 @@ import './App.css';
 
 function GalleryImg(props) {
   return (
-    <img src={props.src} alt={props.alt} />
+    <img className="GalleryImg" src={props.src} alt={props.alt} />
   );
 }
 
@@ -24,9 +24,11 @@ function Gallery() {
   ]);
 
   return (
-    images.map((image, index) => (
-      <GalleryImg key={index} src={image.url} alt={image.alt} />
-    ))
+    <div className="Gallery" >
+      {images.map((image, index) => (
+        <GalleryImg key={index} src={image.url} alt={image.alt} />
+      ))}
+    </div>
   );
 }
 
