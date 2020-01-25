@@ -1,7 +1,40 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import Vimeo from '@vimeo/player'
 import './App.css';
 import * as Secret from "./Secret";
+
+const VideosContext = React.createContext();
+
+async function fetchData() {
+  try {
+    const result = await fetch(`https://api.vimeo.com/users/${Secret.VIMEO_USER_ID}/videos`, {
+      method: "get",
+      headers: new Headers({
+        'Authorization': `Bearer ${Secret.VIMEO_PRIVATE_ACCESS_TOKEN}`
+      })
+    });
+    return await result.json();
+  } catch(error) {
+    console.error(error);
+  }
+};
+
+function Provider(props) {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    async function init() {
+      setData(await fetchData());
+    }
+    init();
+  }, []);
+
+  return (
+    <VideosContext.Provider value={data}>
+      {props.children}
+    </VideosContext.Provider>
+  );
+};
 
 function GalleryImg(props) {
   return (
@@ -9,46 +42,42 @@ function GalleryImg(props) {
   );
 }
 
-const options = {
-  id: "259211385",
-  width: 640
-};
-
-function Gallery() {
+function VideoPlayer() {
+  const [options, setOptions] = useState({
+    id: "259211385",
+    width: 640
+  })
   const ref = useRef(null);
 
   useEffect(() => {
     let videoPlayer = new Vimeo(ref.current, options);
     videoPlayer.setVolume(0);
-  }, [])
+  }, [options])
 
-  // const [images, setImage] = useState([
-  //   {
-  //     url: "https://images.unsplash.com/photo-1579614456650-dfcdfee5db11?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80",
-  //     alt: "Weird shapes, but cool"
-  //   },
-  //   {
-  //     url: "https://images.unsplash.com/photo-1579681638740-8cbde33e30c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80",
-  //     alt: "Drone shot!"
-  //   },
-  //   {
-  //     url: "https://images.unsplash.com/photo-1579677083279-e146fc4a2c5f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=363&q=80",
-  //     alt: "Mountain road, take me home, to the place, na na na na"
-  //   }
-  // ]);
+  return <div ref={ref}></div>;
+}
 
-  return (<div ref={ref}></div>
-    // <div className="Gallery" >
-    //   {images.map((image, index) => (
-    //     <GalleryImg key={index} src={image.url} alt={image.alt} />
-    //   ))}
-    // </div>
+function Gallery() {
+  const data = useContext(VideosContext);
+
+  console.warn(data);
+
+  return (
+    <div className="Gallery" >
+      {data && data.data.map((video, index) => (
+        // <GalleryImg key={index} src={image.url} alt={image.alt} />
+        video.name
+      ))}
+    </div>
   );
 }
 
 function App() {
   return (<div className="App">
-    <Gallery />
+    <Provider>
+        <Gallery />
+        {/* <VideoPlayer /> */}
+    </Provider>
   </div>);
 }
 
