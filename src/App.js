@@ -65,8 +65,7 @@ function Gallery() {
   return (
     <div className="Gallery" >
       {data && data.data.map((video, index) => (
-        // <GalleryImg key={index} src={image.url} alt={image.alt} />
-        video.name
+        <GalleryImg key={index} src={video.pictures.sizes[4].link} alt={video.name} />
       ))}
     </div>
   );
