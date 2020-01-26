@@ -1,37 +1,16 @@
-import React, { useEffect, useReducer } from 'react';
-import rootReducer, { setVideos } from './Reducer';
-import * as Secret from "./Secret";
+import React, { useReducer } from 'react';
+import rootReducer from './Reducer';
 
-export const VideosContext = React.createContext();
+export const AppContext = React.createContext();
 
-async function fetchVideos() {
-    try {
-      const result = await fetch(`https://api.vimeo.com/users/${ Secret.VIMEO_USER_ID }/videos`, {
-        method: "get",
-        headers: new Headers({
-          'Authorization': `Bearer ${ Secret.VIMEO_PRIVATE_ACCESS_TOKEN }`
-        })
-      });
-      return await result.json();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+const initialState = { videos: [] };
 
-export default function Provider(props) {
-    const [state, dispatch] = useReducer(rootReducer, {});
+export default function AppProvider(props) {
+  const [state, dispatch] = useReducer(rootReducer, initialState);
 
-    useEffect(() => {
-        async function init() {
-          const videos = await fetchVideos();
-          dispatch(setVideos(videos));
-        }
-        init();
-    }, []);
-
-    return (
-        <VideosContext.Provider value={[state, dispatch]}>
-            {props.children}
-        </VideosContext.Provider>
-    );
+  return (
+    <AppContext.Provider value={[state, dispatch]}>
+      {props.children}
+    </AppContext.Provider>
+  );
 };

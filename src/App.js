@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Vimeo from '@vimeo/player'
 import './App.css';
-import Provider, { VideosContext } from "./Provider"
+import AppProvider from "./Provider"
+import { useVideos } from './hooks/useVideos';
 
 function GalleryImg(props) {
   return (
@@ -27,12 +28,11 @@ function VideoPlayer() {
 }
 
 function Gallery() {
-  const [state] = useContext(VideosContext);
-  const videos = state.videos;
+  const videos = useVideos();
 
   return (
     <div className="Gallery" >
-      {videos && videos.data.map((video, index) => (
+      {videos && videos.map((video, index) => (
         <GalleryImg key={index} src={video.pictures.sizes[4].link} alt={video.name} />
       ))}
     </div>
@@ -41,10 +41,10 @@ function Gallery() {
 
 function App() {
   return (<div className="App">
-    <Provider>
+    <AppProvider>
       <VideoPlayer />
       <Gallery />
-    </Provider>
+    </AppProvider>
   </div>);
 }
 
