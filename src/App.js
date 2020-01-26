@@ -34,12 +34,16 @@ function VideoPlayer() {
   useEffect(() => {
     if (state.showVideoplayer) {
       let videoPlayer = new Vimeo(ref.current, options);
-      videoPlayer.setVolume(0);
+      videoPlayer.setVolume(0.5);
     }
   }, [options, state.showVideoplayer])
 
+  function onOverlayClick() {
+    dispatch(setShowVideoplayer(false));
+  }
+
   return <div>
-    {state.showVideoplayer && <div className="Overlay">
+    {state.showVideoplayer && <div onClick={onOverlayClick} className="Overlay">
       <div className="VideoPlayer" ref={ref}></div>
     </div>}
   </div>
