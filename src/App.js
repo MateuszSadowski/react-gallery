@@ -27,11 +27,12 @@ function VideoPlayer() {
 }
 
 function Gallery() {
-  const data = useContext(VideosContext);
+  const [state] = useContext(VideosContext);
+  const videos = state.videos;
 
   return (
     <div className="Gallery" >
-      {data && data.data.map((video, index) => (
+      {videos && videos.data.map((video, index) => (
         <GalleryImg key={index} src={video.pictures.sizes[4].link} alt={video.name} />
       ))}
     </div>

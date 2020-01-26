@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useReducer } from 'react';
+import rootReducer, { setVideos } from './Reducer';
 import * as Secret from "./Secret";
 
 export const VideosContext = React.createContext();
 
-async function fetchData() {
+async function fetchVideos() {
     try {
       const result = await fetch(`https://api.vimeo.com/users/${ Secret.VIMEO_USER_ID }/videos`, {
         method: "get",
@@ -18,17 +19,18 @@ async function fetchData() {
   };
 
 export default function Provider(props) {
-    const [data, setData] = useState(null);
+    const [state, dispatch] = useReducer(rootReducer, {});
 
     useEffect(() => {
         async function init() {
-            setData(await fetchData());
+          const videos = await fetchVideos();
+          dispatch(setVideos(videos));
         }
         init();
     }, []);
 
     return (
-        <VideosContext.Provider value={data}>
+        <VideosContext.Provider value={[state, dispatch]}>
             {props.children}
         </VideosContext.Provider>
     );
