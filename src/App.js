@@ -7,14 +7,14 @@ const VideosContext = React.createContext();
 
 async function fetchData() {
   try {
-    const result = await fetch(`https://api.vimeo.com/users/${Secret.VIMEO_USER_ID}/videos`, {
+    const result = await fetch(`https://api.vimeo.com/users/${ Secret.VIMEO_USER_ID }/videos`, {
       method: "get",
       headers: new Headers({
-        'Authorization': `Bearer ${Secret.VIMEO_PRIVATE_ACCESS_TOKEN}`
+        'Authorization': `Bearer ${ Secret.VIMEO_PRIVATE_ACCESS_TOKEN }`
       })
     });
     return await result.json();
-  } catch(error) {
+  } catch (error) {
     console.error(error);
   }
 };
@@ -54,13 +54,13 @@ function VideoPlayer() {
     videoPlayer.setVolume(0);
   }, [options])
 
-  return <div ref={ref}></div>;
+  return (<div className="Overlay">
+    <div className="VideoPlayer" ref={ref}></div>
+  </div>);
 }
 
 function Gallery() {
   const data = useContext(VideosContext);
-
-  console.warn(data);
 
   return (
     <div className="Gallery" >
@@ -74,8 +74,8 @@ function Gallery() {
 function App() {
   return (<div className="App">
     <Provider>
-        <Gallery />
-        {/* <VideoPlayer /> */}
+      <VideoPlayer />
+      <Gallery />
     </Provider>
   </div>);
 }
