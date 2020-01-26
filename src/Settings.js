@@ -1,0 +1,1 @@
+export const VIDEOPLAYER_WIDTH = 640;
