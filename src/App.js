@@ -1,10 +1,10 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import React, { useRef, useEffect, useContext } from 'react';
 import Vimeo from '@vimeo/player'
 import './App.css';
 import AppProvider, { AppContext } from "./Provider"
 import { useVideos } from './hooks/useVideos';
-import { VIDEOPLAYER_WIDTH } from './Settings';
 import { setCurrentVideo, setShowVideoplayer } from './Reducer';
+import { VIDEOPLAYER_WIDTH, VIMEO_THUMBNAIL_SIZE, VIDEOPLAYER_VOLUME } from './Settings';
 
 function GalleryImg(props) {
   const [state, dispatch] = useContext(AppContext);
@@ -12,7 +12,9 @@ function GalleryImg(props) {
   const videoId = splitUri.pop();
 
   function onClickImg() {
-    dispatch(setCurrentVideo(videoId));
+    if (state.currentVideoId !== videoId) {
+      dispatch(setCurrentVideo(videoId));
+    }
     dispatch(setShowVideoplayer(true));
   };
 
@@ -23,20 +25,17 @@ function GalleryImg(props) {
 
 function VideoPlayer() {
   const [state, dispatch] = useContext(AppContext);
-
-  const options = {
-    id: state.currentVideoId,
-    width: VIDEOPLAYER_WIDTH
-  }
-
   const ref = useRef(null);
 
   useEffect(() => {
     if (state.showVideoplayer) {
-      let videoPlayer = new Vimeo(ref.current, options);
-      videoPlayer.setVolume(0.5);
+      let videoPlayer = new Vimeo(ref.current, {
+        id: state.currentVideoId,
+        width: VIDEOPLAYER_WIDTH
+      });
+      videoPlayer.setVolume(VIDEOPLAYER_VOLUME);
     }
-  }, [options, state.showVideoplayer])
+  }, [state.currentVideoId, state.showVideoplayer])
 
   function onOverlayClick() {
     dispatch(setShowVideoplayer(false));
@@ -51,10 +50,11 @@ function VideoPlayer() {
 
 function Gallery() {
   const videos = useVideos();
+
   return (
     <div className="Gallery" >
       {videos && videos.map((video, index) => (
-        <GalleryImg key={index} uri={video.uri} src={video.pictures.sizes[4].link} alt={video.name} />
+        <GalleryImg key={index} uri={video.uri} src={video.pictures.sizes[VIMEO_THUMBNAIL_SIZE].link} alt={video.name} />
       ))}
     </div>
   );

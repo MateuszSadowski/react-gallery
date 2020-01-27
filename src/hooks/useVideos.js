@@ -12,7 +12,7 @@ export function useVideos() {
             dispatch(setVideos(videos.data));
         }
         init();
-    }, []);
+    }, [dispatch]);
 
     return state.videos;
 }

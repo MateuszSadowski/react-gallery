@@ -1,5 +1,5 @@
 export default function rootReducer(state, action) {
-    switch(action.type) {
+    switch (action.type) {
         case 'SET_VIDEOS':
             return {
                 ...state,
