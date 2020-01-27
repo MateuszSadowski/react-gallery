@@ -17,6 +17,11 @@ export default function rootReducer(state, action) {
             }
         default:
             return state;
+        case 'SET_MOUSE_POSITION':
+            return {
+                ...state,
+                mousePos: action.payload
+            }
     };
 }
 
@@ -38,5 +43,12 @@ export function setShowVideoplayer(show) {
     return {
         type: 'SET_SHOW_VIDEOPLAYER',
         payload: show
+    }
+}
+
+export function setMousePosition(mousePos) {
+    return {
+        type: 'SET_MOUSE_POSITION',
+        payload: mousePos
     }
 }

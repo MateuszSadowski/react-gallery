@@ -4,12 +4,25 @@ import './App.css';
 import AppProvider, { AppContext } from "./Provider"
 import { useVideos } from './hooks/useVideos';
 import { setCurrentVideo, setShowVideoplayer } from './Reducer';
-import { VIDEOPLAYER_WIDTH, VIMEO_THUMBNAIL_SIZE, VIDEOPLAYER_VOLUME } from './Settings';
+import { VIDEOPLAYER_WIDTH, VIMEO_THUMBNAIL_SIZE, VIDEOPLAYER_VOLUME, PARALAX_FACTOR } from './Settings';
+import { useMousePosition } from './hooks/useMousePosition';
 
 function GalleryImg(props) {
   const [state, dispatch] = useContext(AppContext);
+  const ref = useRef();
+
   const splitUri = props.uri.split("/");
   const videoId = splitUri.pop();
+
+  let style = {};
+
+  if(ref.current) {
+    let translationX = ref.current.offsetLeft - state.mousePos.x;
+    let translationY = ref.current.offsetTop - state.mousePos.y;
+    style = {
+      transform: `translate(${ PARALAX_FACTOR * translationX }px, ${ PARALAX_FACTOR * translationY }px)`
+    }
+  }
 
   function onClickImg() {
     if (state.currentVideoId !== videoId) {
@@ -19,7 +32,7 @@ function GalleryImg(props) {
   };
 
   return (
-    <img onClick={onClickImg} className="GalleryImg" src={props.src} alt={props.alt} />
+    <img ref={ref} style={style} onClick={onClickImg} className="GalleryImg" src={props.src} alt={props.alt} />
   );
 }
 
@@ -50,6 +63,7 @@ function VideoPlayer() {
 
 function Gallery() {
   const videos = useVideos();
+  const mousePos = useMousePosition();
 
   return (
     <div className="Gallery" >

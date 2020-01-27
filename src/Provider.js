@@ -3,7 +3,7 @@ import rootReducer from './Reducer';
 
 export const AppContext = React.createContext();
 
-const initialState = { videos: [], showVideoplayer: false, currentVideoId: undefined };
+const initialState = { videos: [], showVideoplayer: false, currentVideoId: undefined, mousePos: { x: undefined, y: undefined} };
 
 export default function AppProvider(props) {
   const [state, dispatch] = useReducer(rootReducer, initialState);
