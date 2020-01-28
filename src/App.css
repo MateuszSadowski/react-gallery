@@ -17,11 +17,17 @@
   height: 200px;
   border-radius: 20px;
   margin: 30px;
+  opacity: 0.6;
+  -webkit-transition: box-shadow 0.3s ease;
+  -moz-transition: box-shadow 0.3s ease;
+  -o-transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease;
 }
 
 .GalleryImg:hover {
   cursor: pointer;
-  opacity: 0.6;
+  opacity: 1.0;
+  box-shadow: 0 0 250px orangered;
 }
 
 .VideoPlayer {
