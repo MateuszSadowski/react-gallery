@@ -17,17 +17,43 @@
   height: 200px;
   border-radius: 20px;
   margin: 30px;
-  opacity: 0.6;
-  -webkit-transition: box-shadow 0.3s ease;
-  -moz-transition: box-shadow 0.3s ease;
-  -o-transition: box-shadow 0.3s ease;
-  transition: box-shadow 0.3s ease;
+  opacity: 1.0;
+  -webkit-transition: box-shadow 0.5s ease;
+  -moz-transition: box-shadow 0.5s ease;
+  -o-transition: box-shadow 0.5s ease;
+  transition: box-shadow 0.5s ease;
 }
+
 
 .GalleryImg:hover {
   cursor: pointer;
-  opacity: 1.0;
+  opacity: 0.4;
   box-shadow: 0 0 250px orangered;
+}
+
+.GalleryImgTitle {
+  display: none;
+  /* font-size: 20px;
+  -webkit-transition: font-size 0.3s ease;
+  -moz-transition: font-size 0.3s ease;
+  -o-transition: font-size 0.3s ease;
+  transition: font-size 0.3s ease; */
+}
+
+.GalleryImg:hover + .GalleryImgTitle {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-family: 'Monoton', cursive;
+  /* font-family: 'Fredericka the Great', cursive; */
+  /* font-family: 'Rubik Mono One', sans-serif; */
+  /* font-family: 'Bungee Inline', cursive; */
+  /* font-family: 'Bungee Shade', cursive; */
+  font-size: 40px;
+  pointer-events: none;
 }
 
 .VideoPlayer {

@@ -16,11 +16,11 @@ function GalleryImg(props) {
 
   let style = {};
 
-  if(ref.current) {
+  if (ref.current) {
     let translationX = ref.current.offsetLeft - state.mousePos.x;
     let translationY = ref.current.offsetTop - state.mousePos.y;
     style = {
-      transform: `translate(${ PARALAX_FACTOR * translationX }px, ${ PARALAX_FACTOR * translationY }px)`
+      transform: `translate(${ PARALAX_FACTOR * translationX }px, ${ PARALAX_FACTOR * translationY }px)`,
     }
   }
 
@@ -32,7 +32,10 @@ function GalleryImg(props) {
   };
 
   return (
-    <img ref={ref} style={style} onClick={onClickImg} className="GalleryImg" src={props.src} alt={props.alt} />
+    <div style={style}>
+      <img ref={ref} onClick={onClickImg} className="GalleryImg" src={props.src} alt={props.alt} />
+      <div className='GalleryImgTitle'>{props.alt}</div>
+    </div>
   );
 }
 
