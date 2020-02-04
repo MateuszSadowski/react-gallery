@@ -7,17 +7,17 @@ export function useMousePosition() {
     const [state, dispatch] = useContext(AppContext);
 
     function handleMouseMove(e) {
-        dispatch(setMousePosition({ 
+        dispatch(setMousePosition({
             x: e.pageX,
             y: e.pageY
         }))
     }
 
     useEffect(() => {
-        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener('mousemove', handleMouseMove);
 
         return function cleanUp() {
-            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener('mousemove', handleMouseMove);
         };
     }, []);
 

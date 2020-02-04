@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useContext } from 'react';
 import Vimeo from '@vimeo/player'
 import './App.css';
-import AppProvider, { AppContext } from "./Provider"
+import AppProvider, { AppContext } from './Provider'
 import { useVideos } from './hooks/useVideos';
 import { setCurrentVideo, setShowVideoplayer } from './Reducer';
 import { VIDEOPLAYER_WIDTH, VIMEO_THUMBNAIL_SIZE, VIDEOPLAYER_VOLUME, PARALAX_FACTOR } from './Settings';
@@ -11,7 +11,7 @@ function GalleryImg(props) {
   const [state, dispatch] = useContext(AppContext);
   const ref = useRef();
 
-  const splitUri = props.uri.split("/");
+  const splitUri = props.uri.split('/');
   const videoId = splitUri.pop();
 
   let style = {};
@@ -33,7 +33,7 @@ function GalleryImg(props) {
 
   return (
     <div style={style}>
-      <img ref={ref} onClick={onClickImg} className="GalleryImg" src={props.src} alt={props.alt} />
+      <img ref={ref} onClick={onClickImg} className='GalleryImg' src={props.src} alt={props.alt} />
       <div className='GalleryImgTitle'>{props.alt}</div>
     </div>
   );
@@ -58,18 +58,18 @@ function VideoPlayer() {
   }
 
   return <div>
-    {state.showVideoplayer && <div onClick={onOverlayClick} className="Overlay">
-      <div className="VideoPlayer" ref={ref}></div>
+    {state.showVideoplayer && <div onClick={onOverlayClick} className='Overlay'>
+      <div className='VideoPlayer' ref={ref}></div>
     </div>}
   </div>
 }
 
 function Gallery() {
   const videos = useVideos();
-  const mousePos = useMousePosition();
+  useMousePosition();
 
   return (
-    <div className="Gallery" >
+    <div className='Gallery' >
       {videos && videos.map((video, index) => (
         <GalleryImg key={index} uri={video.uri} src={video.pictures.sizes[VIMEO_THUMBNAIL_SIZE].link} alt={video.name} />
       ))}
@@ -78,7 +78,7 @@ function Gallery() {
 }
 
 function App() {
-  return (<div className="App">
+  return (<div className='App'>
     <AppProvider>
       <VideoPlayer />
       <Gallery />
