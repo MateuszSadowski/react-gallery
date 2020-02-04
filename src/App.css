@@ -13,8 +13,8 @@
 }
 
 .GalleryImg {
-  width: 350px;
-  height: 200px;
+  width: 400px;
+  height: 230px;
   border-radius: 20px;
   margin: 30px;
   opacity: 1.0;
@@ -40,7 +40,7 @@
   transition: font-size 0.3s ease; */
 }
 
-.GalleryImg:hover + .GalleryImgTitle {
+.GalleryImg:hover+.GalleryImgTitle {
   display: block;
   position: absolute;
   top: 50%;

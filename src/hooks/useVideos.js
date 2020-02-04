@@ -9,7 +9,11 @@ export function useVideos() {
     useEffect(() => {
         async function init() {
             const videos = await fetchVideos();
-            dispatch(setVideos(videos.data));
+            if (videos) {
+                dispatch(setVideos(videos.data));
+            } else {
+                console.error('Could not fetch videos. Check your internet connection.');
+            }
         }
         init();
     }, [dispatch]);
