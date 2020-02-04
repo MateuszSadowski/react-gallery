@@ -15,13 +15,13 @@ export default function rootReducer(state, action) {
                 ...state,
                 showVideoplayer: action.payload
             }
-        default:
-            return state;
         case 'SET_MOUSE_POSITION':
             return {
                 ...state,
                 mousePos: action.payload
             }
+        default:
+            return state;
     };
 }
 
