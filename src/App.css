@@ -1,7 +1,8 @@
 .App {
   text-align: center;
   /* Background pattern from Toptal Subtle Patterns */
-  background-image: url(resources/country-quilt-dark.png);
+  background-image: url(resources/office_@2X.png);
+  min-height: 100vh;
 }
 
 .Gallery {
